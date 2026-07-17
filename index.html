@@ -1,0 +1,466 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>HTML Day Melbourne</title>
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <meta name="description" content="" />
+        <link rel="icon" href="favicon.png" />
+        <style>
+            pre code.hcj {
+                display: block;
+                overflow-x: auto;
+                padding: 1em;
+            }
+            code.hcj {
+                padding: 3px 5px;
+            }
+            .hcj {
+                color: #24292e;
+                background: #fff;
+            }
+            .hcj-doctag,
+            .hcj-keyword,
+            .hcj-meta .hcj-keyword,
+            .hcj-template-tag,
+            .hcj-template-variable,
+            .hcj-type,
+            .hcj-variable.language_ {
+                color: #d73a49;
+            }
+            .hcj-title,
+            .hcj-title.class_,
+            .hcj-title.class_.inherited__,
+            .hcj-title.function_ {
+                color: #6f42c1;
+            }
+            .hcj-attr,
+            .hcj-attribute,
+            .hcj-literal,
+            .hcj-meta,
+            .hcj-number,
+            .hcj-operator,
+            .hcj-selector-attr,
+            .hcj-selector-class,
+            .hcj-selector-id,
+            .hcj-variable {
+                color: #005cc5;
+            }
+            .hcj-meta .hcj-string,
+            .hcj-regexp,
+            .hcj-string {
+                color: #032f62;
+            }
+            .hcj-built_in,
+            .hcj-symbol {
+                color: #e36209;
+            }
+            .hcj-code,
+            .hcj-comment,
+            .hcj-formula {
+                color: #6a737d;
+            }
+            .hcj-name,
+            .hcj-quote,
+            .hcj-selector-pseudo,
+            .hcj-selector-tag {
+                color: #22863a;
+            }
+            .hcj-subst {
+                color: #24292e;
+            }
+            .hcj-section {
+                color: #005cc5;
+                font-weight: 700;
+            }
+            .hcj-bullet {
+                color: #735c0f;
+            }
+            .hcj-emphasis {
+                color: #24292e;
+                font-style: italic;
+            }
+            .hcj-strong {
+                color: #24292e;
+                font-weight: 700;
+            }
+            .hcj-addition {
+                color: #22863a;
+                background-color: #f0fff4;
+            }
+            .hcj-deletion {
+                color: #b31d28;
+                background-color: #ffeef0;
+            }
+
+            body {
+                display: flex;
+                justify-content: center;
+                flex-direction: column;
+                align-items: center;
+                margin: 0;
+                padding: 0;
+            }
+
+            main {
+                --grid-size: 4em;
+                display: grid;
+                grid-template-columns: repeat(8, var(--grid-size));
+                grid-template-rows: repeat(36, var(--grid-size));
+                /*border: 1px solid black;*/
+                padding: 0.5em;
+                width: min-content;
+
+                & section {
+                    border: 1px solid black;
+                    padding: 0.5em;
+                    margin: 0.05em;
+                    background-color: white;
+                }
+
+                & .intro {
+                    grid-column: 1 / 7;
+                    grid-row: 1 / 9;
+                }
+                & .how {
+                    grid-column: 5 / 9;
+                    grid-row: 5 / 9;
+                    & ul {
+                    }
+                }
+                & .why {
+                    grid-column: 1 / 4;
+                    grid-row: 8 / 15;
+                }
+                & .when {
+                    grid-column: 6 / 8;
+                    grid-row: 10 / 13;
+                }
+                & .where {
+                    grid-column: 4 / 7;
+                    grid-row: 11 / 14;
+                }
+                & .who {
+                    grid-column: 6 / 9;
+                    grid-row: 15 / 18;
+                }
+                & .schedule {
+                    grid-column: 1 / 7;
+                    grid-row: 16 / 20;
+                }
+                & .now {
+                    grid-column: 1 / 9;
+                    grid-row: 21 / 29;
+                }
+                & .code {
+                    grid-column: 6 / 9;
+                    grid-row: 30 / 35;
+                }
+            }
+            @media (max-width: 45em) {
+                main {
+                    --grid-size: min(4em, (100vw - 1em) / 8);
+                    font-size: calc(100vw / 33);
+                }
+            }
+
+            tr,
+            td {
+                border: 1px solid black;
+            }
+
+            .bg {
+                border: 1px solid var(--border);
+                margin: 0.05em;
+                text-align: center;
+                color: contrast-color(var(--color));
+                background-color: var(--color);
+                font-size: xx-small;
+                padding: 0.2em;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                &:hover,
+                &:active {
+                    background-color: blue;
+                }
+
+                opacity: 0;
+                animation: 50ms ease-in 0s forwards slide-in;
+            }
+
+            @keyframes slide-in {
+                from {
+                    opacity: 0;
+                }
+
+                to {
+                    opacity: 1;
+                }
+            }
+
+            .rsvp {
+                padding: 0;
+                display: grid;
+                grid-template-columns: subgrid;
+                grid-template-rows: subgrid;
+
+                & form {
+                    display: contents;
+                    text-align: center;
+
+                    & input[name="name"],
+                    & input[name="email"] {
+                        grid-column: 1 / 4;
+                        margin: 0.1em;
+                    }
+
+                    & input[type="color"] {
+                        grid-column: 2 / 4;
+                        width: auto;
+                        height: auto;
+                    }
+
+                    h2 {
+                        grid-column: 1 / 4;
+                        text-align: left;
+                        padding: 0 0.5em;
+                    }
+
+                    & .explanation {
+                        grid-column: 1 / 4;
+                        padding: 0.5em;
+                    }
+
+                    & button,
+                    input {
+                        outline: unset;
+                        border: 1px solid black;
+                        background-color: transparent;
+                        margin: 0.1em;
+                    }
+
+                    & button {
+                        font-size: x-small;
+                    }
+
+                    & button:hover {
+                        background-color: blue;
+                    }
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <main>
+            <section class="intro">
+                <h1>HTML Day Melbourne</h1>
+
+                <p>
+                    HTML Day is
+                    <a href="https://html.energy/html-day/2026/index.html"
+                        >"an annual celebration of HTML going 4 years
+                        &lt;strong&gt;"</a
+                    >
+                </p>
+
+                <p>
+                    Come join us to free-write HTML together. Make some friends
+                    and celebrate the web.
+                </p>
+            </section>
+
+            <section class="where">
+                <h2>Where</h2>
+                <p>TBD</p>
+            </section>
+
+            <section class="when">
+                <h2>When</h2>
+                <p>August 8th, 12pm</p>
+            </section>
+
+            <section class="why rsvp">
+                <form
+                    id="rsvp"
+                    action="https://rsvps.val.run/rsvps"
+                    method="POST"
+                    enctype="multipart/form-data"
+                >
+                    <h2>RSVP</h2>
+                    <input
+                        type="email"
+                        name="email"
+                        placeholder="Email (for reminder)"
+                        required=""
+                    />
+                    <input
+                        type="text"
+                        name="name"
+                        placeholder="Name"
+                        required=""
+                    />
+
+                    <label for="color"> Choose your color </label>
+
+                    <input
+                        id="color"
+                        type="color"
+                        name="color"
+                        value="#ffffff"
+                        required=""
+                    />
+
+                    <button
+                        id="going"
+                        type="submit"
+                        name="status"
+                        value="going"
+                    >
+                        Going
+                    </button>
+                    <button type="submit" name="status" value="maybe">
+                        Maybe
+                    </button>
+                    <button type="submit" name="status" value="can't come">
+                        Can't come
+                    </button>
+                    <div class="explanation">
+                        Resubmit your RSVP with the same email to change status
+                        or color
+                    </div>
+                </form>
+            </section>
+
+            <section class="how">
+                <h2>How</h2>
+                <ul>
+                    <li>Charged laptop</li>
+                    <li>A friend</li>
+                    <li>Phone + Charger for internet hotspot</li>
+                    <li>
+                        Pens, pencils, notebooks, crayons. Anything you can use
+                        to make art for your website
+                    </li>
+                </ul>
+            </section>
+
+            <section class="schedule">
+                <h2>Schedule</h2>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>12:00</td>
+                            <td>setup</td>
+                        </tr>
+                        <tr>
+                            <td>12:15</td>
+                            <td>call to action</td>
+                        </tr>
+                        <tr>
+                            <td>12:22</td>
+                            <td>build build build</td>
+                        </tr>
+                        <tr>
+                            <td>02:45</td>
+                            <td>demos</td>
+                        </tr>
+                        <tr>
+                            <td>03:00</td>
+                            <td>mingle mingle</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="who">
+                <h2>Who</h2>
+                <p>Hopefully you!</p>
+                <p>
+                    This event is organised by
+                    <a href="https://avavu.au">Ava Dinh-Vu</a>
+                </p>
+            </section>
+
+            <section class="now">
+                <h2>But I'm new??</h2>
+                <p>It doesn't matter!</p>
+                <p>Use this HTML template to get you started.</p>
+                <pre><code class="hcj"><span class="language-xml"><span class="hcj-meta">&lt;!DOCTYPE <span class="hcj-keyword">html</span>&gt;</span>
+<span class="hcj-tag">&lt;<span class="hcj-name">html</span> <span class="hcj-attr">lang</span>=<span class="hcj-string">&quot;en&quot;</span>&gt;</span>
+    <span class="hcj-tag">&lt;<span class="hcj-name">head</span>&gt;</span>
+        <span class="hcj-tag">&lt;<span class="hcj-name">meta</span> <span class="hcj-attr">charset</span>=<span class="hcj-string">&quot;UTF-8&quot;</span> /&gt;</span>
+        <span class="hcj-tag">&lt;<span class="hcj-name">title</span>&gt;</span>HTML Day 2026<span class="hcj-tag">&lt;/<span class="hcj-name">title</span>&gt;</span>
+        <span class="hcj-tag">&lt;<span class="hcj-name">meta</span> <span class="hcj-attr">name</span>=<span class="hcj-string">&quot;viewport&quot;</span> <span class="hcj-attr">content</span>=<span class="hcj-string">&quot;width=device-width,initial-scale=1&quot;</span> /&gt;</span>
+        <span class="hcj-tag">&lt;<span class="hcj-name">meta</span> <span class="hcj-attr">name</span>=<span class="hcj-string">&quot;description&quot;</span> <span class="hcj-attr">content</span>=<span class="hcj-string">&quot;&quot;</span> /&gt;</span>
+        <span class="hcj-tag">&lt;<span class="hcj-name">link</span> <span class="hcj-attr">rel</span>=<span class="hcj-string">&quot;icon&quot;</span> <span class="hcj-attr">href</span>=<span class="hcj-string">&quot;favicon.png&quot;</span> /&gt;</span>
+    <span class="hcj-tag">&lt;/<span class="hcj-name">head</span>&gt;</span>
+    <span class="hcj-tag">&lt;<span class="hcj-name">body</span>&gt;</span>
+        <span class="hcj-tag">&lt;<span class="hcj-name">h1</span>&gt;</span>Hello, world!<span class="hcj-tag">&lt;/<span class="hcj-name">h1</span>&gt;</span>
+    <span class="hcj-tag">&lt;/<span class="hcj-name">body</span>&gt;</span>
+<span class="hcj-tag">&lt;/<span class="hcj-name">html</span>&gt;</span>
+            </span></code></pre>
+            </section>
+
+            <section class="code">
+                <h2>Code</h2>
+                <p>
+                    Source code for this page is available
+                    <a href="https://github.com/avavuvu/htmlday2026">here</a>
+                </p>
+                <p>
+                    Source code for the backend is
+                    <a
+                        href="https://www.val.town/x/avadinhvu/rsvps/code/main.ts"
+                        >here</a
+                    >
+                </p>
+                <p>
+                    <a href="https://maxbo.me/html-in-hyde/2/invitation.html">
+                        This page has shamelessly copied Max Bo's Sydney HTML
+                        meetup page.
+                    </a>
+                </p>
+            </section>
+        </main>
+
+        <script>
+            (async () => {
+                const rsvpData = await fetch("https://rsvps.val.run/rsvps");
+                const json = await rsvpData.json();
+
+                const grid = document.querySelector("main");
+
+                for (let row = 0; row < 30; row++) {
+                    for (let col = 0; col < 8; col++) {
+                        const index = row * 8 + col;
+
+                        const div = document.createElement("div");
+                        div.className = "bg";
+                        div.style.animationDelay = `${index * 210 + 400}ms`;
+
+                        div.style.setProperty("--color", "white");
+                        div.style.setProperty("--border", "black");
+
+                        const data = json[index];
+                        if (data) {
+                            const status = {
+                                "can't come": "can't come",
+                                going: "is going",
+                                maybe: "might be going",
+                            }[data.status];
+
+                            div.innerHTML = `${data.name} ${status}`;
+
+                            div.dataset.color = data.color;
+                            div.style.setProperty("--color", data.color);
+                        }
+
+                        grid.append(div);
+                    }
+                }
+            })();
+        </script>
+    </body>
+</html>
