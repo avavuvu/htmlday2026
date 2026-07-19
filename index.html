@@ -173,7 +173,7 @@
                 border: 1px solid var(--border);
                 margin: 0.05em;
                 text-align: center;
-                color: contrast-color(var(--color));
+                color: var(--text-color);
                 background-color: var(--color);
                 font-size: xx-small;
                 padding: 0.2em;
@@ -240,6 +240,9 @@
                         background-color: transparent;
                         margin: 0.1em;
                         color: black;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
                     }
 
                     & button {
@@ -427,6 +430,24 @@
         </main>
 
         <script>
+            function contrastColor(hex) {
+                const rgb = Number.parseInt(hex.substring(1), 16);
+
+                const [r, g, b] = [
+                    rgb >> 16,
+                    (rgb >> 8) & 0xff,
+                    rgb & 0xff,
+                ].map((c) => {
+                    c /= 255;
+                    return c <= 0.03928
+                        ? c / 12.92
+                        : ((c + 0.055) / 1.055) ** 2.4;
+                });
+
+                const luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+                return luminance > 0.179 ? "black" : "white";
+            }
+
             (async () => {
                 const rsvpData = await fetch("https://rsvps.val.run/rsvps");
                 const json = await rsvpData.json();
@@ -442,6 +463,7 @@
                         div.style.animationDelay = `${index * 210 + 400}ms`;
 
                         div.style.setProperty("--color", "white");
+                        div.style.setProperty("--text-color", "black");
                         div.style.setProperty("--border", "black");
 
                         const data = json[index];
@@ -455,7 +477,11 @@
                             div.innerHTML = `${data.name} ${status}`;
 
                             div.dataset.color = data.color;
+
                             div.style.setProperty("--color", data.color);
+
+                            const complement = contrastColor(data.color);
+                            div.style.setProperty("--text-color", complement);
                         }
 
                         grid.append(div);
