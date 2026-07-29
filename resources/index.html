@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Resources – HTML Day</title>
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <meta name="description" content="" />
+        <link rel="icon" href="/favicon.svg" />
+        <link rel="icon" href="/favicon.ico" />
+        <style>
+            body {
+                display: flex;
+                justify-content: center;
+                flex-direction: column;
+                align-items: center;
+                margin: 0;
+                padding: 0;
+            }
+
+            main {
+                --grid-size: 4em;
+                display: grid;
+                grid-template-columns: repeat(8, var(--grid-size));
+                grid-template-rows: repeat(36, var(--grid-size));
+                padding: 0.5em;
+                width: min-content;
+
+                & section {
+                    border: 1px solid black;
+                    padding: 0.5em;
+                    margin: 0.05em;
+                    background-color: white;
+                }
+
+                & .intro {
+                    grid-column: 2 / 7;
+                    grid-row: 1 / 4;
+
+                    & ul {
+                        display: flex;
+                        flex-wrap: wrap;
+                        gap: 0 2em;
+
+                        & li::marker {
+                            border: 1px solid black;
+                        }
+
+                        & li.insp::marker {
+                            color: steelblue;
+                        }
+                        & li.tut::marker {
+                            color: yellow;
+                        }
+                        & li.html::marker {
+                            color: yellowgreen;
+                        }
+                        & li.person::marker {
+                            color: lavender;
+                        }
+                        & li.resource::marker {
+                            color: mediumaquamarine;
+                        }
+                    }
+                }
+
+                & #prompts {
+                    grid-column: 2 / 9;
+                    grid-row: 8 / 16;
+                }
+            }
+
+            @media (max-width: 45em) {
+                main {
+                    --grid-size: min(4em, (100vw - 1em) / 8);
+                    font-size: calc(100vw / 33);
+                }
+            }
+
+            .bg {
+                border: 1px solid black;
+                margin: 0.05em;
+                text-align: center;
+                font-size: xx-small;
+                padding: 0.2em;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                & a {
+                    color: black;
+
+                }
+
+                &.important {
+                    font-size: xx-large;
+                }
+
+                &.insp {
+                    background-color: lightblue;
+                }
+
+                &.tut {
+                    background-color: yellow;
+                }
+
+                &.html {
+                    background-color: greenyellow;
+                }
+
+                &.person {
+                    background-color: lavender;
+                }
+                &.resource {
+                    background-color: mediumaquamarine;
+                }
+
+                &:hover,
+                &:active {
+                    background-color: blue;
+                    & a {
+                        color:white;
+                    }
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <main>
+            <div class="bg tut">
+                <a href="https://www.youtube.com/watch?v=CkzbI1Tv_rQ">Basics of HTML (youtube)</a>
+            </div>
+            <div class="bg tut">
+                <a href="https://www.youtube.com/watch?v=aHUtMbJw8iA">Why Is CSS So Weird? (youtube)</a>
+            </div>
+            <div class="bg important">
+                I
+            </div>
+            <div class="bg tut">
+                <a href="https://htmlreference.io/">htmlreference.io</a>
+            </div>
+            <div class="bg tut">
+                <a href="https://petrapixel.neocities.org/coding/positioning-tutorial">CSS Positioning Tutorial</a>
+            </div>
+            <div class="bg tut">
+                <a href="https://nagizin.xyz/htmlColorList/">html colour list</a>
+            </div>
+            <div class="bg important">
+                K
+            </div>
+            <div class="bg tut">
+                <a href="https://bellkiosk.website/blog/reasons-to-website.html">95 reasons for having your own website</a>
+            </div>
+            <div class="bg tut">
+                <a href="https://neocities.org/tutorial/html/1">Make Your First Edit (neocities)</a>
+            </div>
+            <div class="bg tut">
+                <a href="https://www.youtube.com/watch?v=4dvf6kM70qM">Rust makes cents (youtube)</a>
+            </div>
+            <div class="bg important">
+                N
+            </div>
+            <div class="bg tut">
+                <a href="https://veryinteractive.net/">very interactive tutorials</a>
+            </div>
+            <div class="bg insp">
+                <a href="https://a-website-is-a-room.net/">a website is a room</a>
+            </div>
+             <div class="bg important">
+                O
+            </div>
+            <div class="bg insp">
+                <a href="https://tilde.town/~troido/cadastre/town.html/">ascii town</a>
+            </div>
+
+            <div class="bg insp">
+                <a href="https://thinkinboutyou.com/">are you in love?</a>
+            </div>
+            <div class="bg insp">
+                <a href="https://consumed.today/">consumed.today</a>
+            </div>
+            <div class="bg insp">
+                <a href="https://sebastianlyserena.dk/">Sebastian Ly Serena's site</a>
+            </div>
+            <div class="bg insp">
+                <a href="https://beatmeatboggle.com/">beat me at boggle</a>
+            </div>
+            <div class="bg important">
+                W
+            </div>
+
+            <div class="bg insp">
+                <a href="https://www.yourworldoftext.com/">your world of text</a>
+            </div>
+            <div class="bg insp">
+                <a href="https://www.are.na/jisu-l/table-iitrmc1wegk">tables (are.na)</a>
+            </div>
+            <div class="bg insp">
+                <a href="https://www.are.na/jisu-l/columns-k_wwr2_dn2q">columns (are.na)</a>
+            </div>
+            <div class="bg insp">
+                <a href="https://pointerpointer.com/">pointer pointer</a>
+            </div>
+            <div class="bg important">
+                H
+            </div>
+
+            <div class="bg resource">
+                <a href="https://special.fish/">special.fish</a>
+            </div>
+            <div class="bg resource">
+                <a href="https://poeticweb.com/">poetic web</a>
+            </div>
+            <div class="bg resource">
+                <a href="https://thehtml.review/05/">html.review</a>
+            </div>
+            <div class="bg resource">
+                <a href="https://iris.ooo/">iris.ooo</a>
+            </div>
+            <div class="bg resource">
+                <a href="https://www.nts.live/">NTS</a>
+            </div>
+            <div class="bg important">
+                T
+            </div>
+
+            <div class="bg person">
+                <a href="https://kevin.garden/">kevin.garden</a>
+            </div>
+
+
+            <div class="bg person">
+                <a href="https://html.energy/philip.html">Philip Guo</a>
+            </div>
+            <div class="bg person">
+                <a href="https://shen.land/">shen.land</a>
+            </div>
+
+
+            <div class="bg person">
+                <a href="https://maxbo.me">max bo</a>
+            </div>
+            <div class="bg person">
+                <a href="https://avavu.au">ava vu</a>
+            </div>
+
+            <div class="bg person">
+                <a href="https://elliott.computer/">elliott.computer</a>
+            </div>
+            <div class="bg important">
+                M
+            </div>
+            <div class="bg person">
+                <a href="https://www.are.na/jisu-l/somebody-dot-com">somebody dot com (directory)</a>
+            </div>
+            <div class="bg person">
+                <a href="https://tiana.computer/">tiana.computer</a>
+            </div>
+
+
+            <div class="bg html">
+                <a href="https://html.green/">html day toronto</a>
+            </div>
+            <div class="bg html">
+                <a href="https://html.energy/">html.energy</a>
+            </div>
+            <div class="bg important">
+                L
+            </div>
+
+            <div class="bg html">
+                <a href="https://maxbo.me/html-in-hyde/index.html">html day sydney</a>
+            </div>
+            <div class="bg html">
+                <a href="https://maxbo.me/html-in-hyde/index.html#resources">html day sydney resources</a>
+            </div>
+
+
+            <div class="bg">
+                <div>
+                    (<b>H</b>ow <b>T</b>o <b>M</b>eet <b>L</b>adies)
+                </div>
+            </div>
+
+            <section class="intro">
+                <h2>To get you started</h2>
+                <p>
+                    key:
+                </p>
+                <ul>
+                    <li class="tut">
+                        tutorials
+                    </li>
+                    <li class="resource">
+                        resources
+                    </li>
+                    <li class="insp">
+                        inspo
+                    </li>
+                    <li class="person">
+                        people
+                    </li>
+                    <li class="html">
+                        html.day
+                    </li>
+                    <li class="prompts">
+                        <a href="#prompts"">prompts</a>
+                    </li>
+                </ul>
+            </section>
+
+            <section id="prompts">
+                <p><i>Borrowed from <a href="https://html.green/">HTML Day Toronto</a> </i></p>
+                <ol>
+                    <li>Make a site that makes you feel calm.</li>
+                    <li>Make a site the wildlife in this park would want to read. What's a good website for a worm? What's a fun webpage for a sparrow?</li>
+                    <li>Embody the spirit of a food product of your choosing.</li>
+                    <li>Make a site that's a letter to a friend. Is there an envelope? How do you sign off a website?</li>
+                    <li>What's your favourite place in [enter your location]? Make a website like a historical plaque, telling people about what you think is special about it.</li>
+                    <li>Find a lesser used HTML tag: what uncovered beauty hides within its brackets? (suggestions: &lt;blink&gt;, &lt;map&gt;, &lt;bdi&gt;, &lt;ruby&gt;)</li>
+                    <li>Make a website that breaks out of the square box of the browser window. Or perhaps, uses the window as a window?</li>
+                    <li>How can a website move like the wind?</li>
+                    <li>Design a site that feels like taking a long walk through a park.</li>
+                    <li>Think of a fun childhood memory. Make a website that's a shrine to that moment.</li>
+                </ol>
+            </section>
+        </main>
+    </body>
+</html>
