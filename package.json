@@ -1,0 +1,6 @@
+{
+    "dependencies": {
+        "@netlify/blobs": "^8.1.0",
+        "fflate": "^0.8.2"
+    }
+}
