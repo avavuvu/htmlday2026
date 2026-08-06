@@ -49,13 +49,16 @@
                 border: 1px solid var(--border);
                 margin: 0.05em;
                 text-align: center;
-                color: var(--text-color);
                 background-color: var(--color);
-                font-size: xx-small;
                 padding: 0.2em;
                 display: flex;
                 justify-content: center;
                 align-items: center;
+
+                & a {
+                    color: var(--text-color);
+                    font-size: xx-small;
+                }
 
                 &:hover,
                 &:active {
@@ -181,15 +184,20 @@
 
                 const grid = document.querySelector("main");
 
-                for (const name of names) {
+                for (let i = 0; i < names.length; i++) {
                     const div = document.createElement("div");
                     div.className = "bg";
-                    div.style.animationDelay = `${index * 210 + 400}ms`;
+                    div.style.animationDelay = `${i * 210 + 400}ms`;
 
                     div.style.setProperty("--color", "white");
                     div.style.setProperty("--text-color", "black");
                     div.style.setProperty("--border", "black");
                     div.innerText = `/${name}`;
+
+                    const anchor = document.createElement("a");
+                    anchor.href = `/${name}`;
+
+                    div.append(anchor)
 
                     grid.append(div);
                 }
