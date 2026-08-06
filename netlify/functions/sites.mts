@@ -27,6 +27,7 @@ const MIME: Record<string, string> = {
 const RESERVED = new Set(["submit", "rsvps", "resources", "about", "test", "favicon.png", "index.html"]);
 
 const NAME_PATTERN = /^[a-z0-9-]{1,30}$/;
+const COLOR_PATTERN = /^#[0-9a-f]{6}$/;
 const MAX_ZIP_BYTES = 5_000_000;
 
 export default async (req: Request) => {
@@ -36,8 +37,17 @@ export default async (req: Request) => {
 
     if (req.method === "GET" && path === "/list") {
         const { directories } = await store.list({ directories: true });
-        const names = directories.map((d) => d.replace(/\/$/, ""));
-        return Response.json(names);
+        const sites = await Promise.all(
+            directories.map(async (d) => {
+                const name = d.replace(/\/$/, "");
+                const meta = await store.getMetadata(`${name}/index.html`);
+                return {
+                    name,
+                    color: (meta?.metadata?.color as string) ?? "#ffffff",
+                };
+            }),
+        );
+        return Response.json(sites);
     }
 
     if (req.method === "POST" && path === "/upload") {
@@ -77,6 +87,10 @@ async function handleUpload(req: Request, store: ReturnType<typeof getStore>) {
         .trim()
         .toLowerCase();
     const file = form.get("zip");
+    let color = String(form.get("color") ?? "")
+        .trim()
+        .toLowerCase();
+    if (!COLOR_PATTERN.test(color)) color = "#ffffff";
 
     if (!NAME_PATTERN.test(name) || RESERVED.has(name)) {
         return new Response("name must be 1-30 chars of a-z, 0-9, or -", {
@@ -123,7 +137,13 @@ async function handleUpload(req: Request, store: ReturnType<typeof getStore>) {
     await Promise.all(blobs.map((b) => store.delete(b.key)));
 
     await Promise.all(
-        entries.map(([p, data]) => store.set(`${name}/${p}`, new Blob([data as any]))),
+        entries.map(([p, data]) =>
+            store.set(
+                `${name}/${p}`,
+                new Blob([data as any]),
+                p === "index.html" ? { metadata: { color } } : undefined,
+            ),
+        ),
     );
 
     return new Response(null, {

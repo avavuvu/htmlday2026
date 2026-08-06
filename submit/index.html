@@ -50,20 +50,27 @@
                 margin: 0.05em;
                 text-align: center;
                 background-color: var(--color);
-                padding: 0.2em;
                 display: flex;
-                justify-content: center;
-                align-items: center;
 
                 & a {
                     color: var(--text-color);
                     font-size: xx-small;
+                    flex: 1;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    padding: 0.2em;
+                    overflow-wrap: anywhere;
+                    min-width: 0;
                 }
 
                 &:hover,
                 &:active {
                     background-color: blue;
-                    color:white;
+
+                    & a {
+                        color: white;
+                    }
                 }
 
                 opacity: 0;
@@ -85,14 +92,16 @@
                 grid-template-columns: subgrid;
                 grid-template-rows: subgrid;
                 border: 1px solid black;
+                background-color: white;
+                margin: 0.05em;
 
                 & .name {
-                    grid-column: 1 / 5;
+                    grid-column: 1 / 6;
+                    grid-row: 1;
                     justify-content: center;
                     align-items: center;
                     border: 1px solid black;
                     margin: 0.1em;
-
 
                     display: flex;
 
@@ -105,18 +114,52 @@
 
                 & .info {
                     grid-column: 1 / 6;
+                    grid-row: 2;
                     border: 1px solid black;
                     margin: 0.1em;
                     padding: 0.1em;
                 }
 
                 & .diagram {
-                    grid-row: 3 / 6;
-                    grid-column: 2 / 5;
+                    grid-column: 1 / 3;
+                    grid-row: 3 / 8;
                     border: 1px solid black;
                     margin: 0.1em;
                     padding: 0.1em;
+                    font-size: small;
 
+                    & ul {
+                        padding-inline-start: 1.2em;
+                        margin: 0.2em 0;
+                    }
+                }
+
+                & input[type="file"] {
+                    grid-column: 3 / 6;
+                    grid-row: 3;
+                    min-width: 0;
+                    font-size: small;
+                }
+
+                & .color {
+                    grid-column: 3 / 6;
+                    grid-row: 4;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    gap: 0.3em;
+                    border: 1px solid black;
+                    margin: 0.1em;
+
+                    & input {
+                        border: none;
+                        min-width: 2em;
+                    }
+                }
+
+                & button {
+                    grid-column: 3 / 6;
+                    grid-row: 5 / 8;
                 }
             }
 
@@ -149,6 +192,10 @@
                     />
                 </div>
                 <input type="file" name="zip" accept=".zip" required />
+                <label class="color">
+                    your color
+                    <input type="color" name="color" value="#ffffff" />
+                </label>
                 <div class="info">
                     Your submission must be a <b>.zip</b> file with an <b>index.html</b> file at the root.
                 </div>
@@ -179,25 +226,43 @@
         </main>
 
         <script>
+            function contrastColor(hex) {
+                const rgb = Number.parseInt(hex.substring(1), 16);
+
+                const [r, g, b] = [rgb >> 16, (rgb >> 8) & 0xff, rgb & 0xff].map(
+                    (c) => {
+                        c /= 255;
+                        return c <= 0.03928
+                            ? c / 12.92
+                            : ((c + 0.055) / 1.055) ** 2.4;
+                    },
+                );
+
+                const luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+                return luminance > 0.179 ? "black" : "white";
+            }
+
             (async () => {
-                const names = await (await fetch("/list")).json();
+                const sites = await (await fetch("/list")).json();
 
                 const grid = document.querySelector("main");
 
-                for (let i = 0; i < names.length; i++) {
+                for (let i = 0; i < sites.length; i++) {
+                    const { name, color } = sites[i];
+
                     const div = document.createElement("div");
                     div.className = "bg";
                     div.style.animationDelay = `${i * 210 + 400}ms`;
 
-                    div.style.setProperty("--color", "white");
-                    div.style.setProperty("--text-color", "black");
+                    div.style.setProperty("--color", color);
+                    div.style.setProperty("--text-color", contrastColor(color));
                     div.style.setProperty("--border", "black");
-                    div.innerText = `/${name}`;
 
                     const anchor = document.createElement("a");
-                    anchor.href = `/${name}`;
+                    anchor.href = `/${name}/`;
+                    anchor.innerText = `/${name}`;
 
-                    div.append(anchor)
+                    div.append(anchor);
 
                     grid.append(div);
                 }
