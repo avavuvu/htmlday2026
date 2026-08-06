@@ -24,16 +24,21 @@ const MIME: Record<string, string> = {
     wasm: "application/wasm",
 };
 
-const RESERVED = new Set(["upload", "rsvps", "favicon.png", "index.html"]);
+const RESERVED = new Set(["submit", "rsvps", "resources", "about", "test", "favicon.png", "index.html"]);
+
 const NAME_PATTERN = /^[a-z0-9-]{1,30}$/;
 const MAX_ZIP_BYTES = 5_000_000;
 
 export default async (req: Request) => {
     const url = new URL(req.url);
-    // path is the original url when invoked via rewrite, but strip the
-    // function prefix in case it's hit directly
     const path = url.pathname.replace(/^\/\.netlify\/functions\/sites/, "");
     const store = getStore("sites");
+
+    if (req.method === "GET" && path === "/list") {
+        const { directories } = await store.list({ directories: true });
+        const names = directories.map((d) => d.replace(/\/$/, ""));
+        return Response.json(names);
+    }
 
     if (req.method === "POST" && path === "/upload") {
         return handleUpload(req, store);
@@ -46,7 +51,6 @@ export default async (req: Request) => {
         return new Response("no such page", { status: 404 });
     }
 
-    // relative urls inside pages only resolve correctly under /name/
     if (segments.length === 1 && !path.endsWith("/")) {
         return Response.redirect(new URL(`${url.pathname}/`, url), 301);
     }
@@ -99,7 +103,6 @@ async function handleUpload(req: Request, store: ReturnType<typeof getStore>) {
             !p.split("/").some((s) => s.startsWith(".") || s === "__MACOSX"),
     );
 
-    // macos zips wrap everything in a folder; unwrap it
     if (!entries.some(([p]) => p === "index.html")) {
         const tops = new Set(entries.map(([p]) => p.split("/")[0]));
         if (tops.size === 1) {
@@ -116,7 +119,6 @@ async function handleUpload(req: Request, store: ReturnType<typeof getStore>) {
         });
     }
 
-    // clear the old site so removed files don't linger
     const { blobs } = await store.list({ prefix: `${name}/` });
     await Promise.all(blobs.map((b) => store.delete(b.key)));
 
