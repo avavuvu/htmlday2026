@@ -1,0 +1,9 @@
+[[redirects]]
+  from = "/*"
+  to = "/.netlify/functions/sites/:splat"
+  status = 200
+
+
+[build]
+  publish = "."
+  command = ""
